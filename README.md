@@ -1,5 +1,9 @@
 # kairos-healthcheck
-Health check plugin to fix querying getMetricNames in kairosdb 1.1.3
+Health check plugin to fix querying getMetricNames in kairosdb 1.1.3.  It may work
+with older versions but I have not tried it.
+
+This plugin will query the metric that is specified in kairos-healthcheck.properties in order
+to do a backend check.
 
 Installation
 ------------
