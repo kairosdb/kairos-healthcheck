@@ -37,11 +37,12 @@ public class DatastoreQueryHealthCheck extends HealthCheck implements HealthStat
 	@Override
 	protected HealthCheck.Result check() throws Exception
 	{
+		DatastoreQuery query = null;
 		try
 		{
-			DatastoreQuery query = m_datastore.createQuery(
-					new QueryMetric(System.currentTimeMillis() - (10 * 60 * 1000),
-							0, m_healthMetric));
+			query = m_datastore.createQuery(
+				new QueryMetric(System.currentTimeMillis() - (10 * 60 * 1000),
+						0, m_healthMetric));
 
 			query.execute();
 			return HealthCheck.Result.healthy();
@@ -49,6 +50,11 @@ public class DatastoreQueryHealthCheck extends HealthCheck implements HealthStat
 		catch (DatastoreException e)
 		{
 			return HealthCheck.Result.unhealthy(e);
+		}
+		finally
+		{
+			if (query != null)
+				query.close();
 		}
 	}
 }
